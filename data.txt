@@ -1,0 +1,68 @@
+ import json
+from django.shortcuts import render
+from django.http import JsonResponse, HttpResponse
+from products.models import Product
+from django.forms import model_to_dict
+
+ 
+ # data = request.headers
+    # data = request.META
+    data = request.GET
+    print(request)
+    print(data)
+    return JsonResponse({"helllo api": "world"})
+
+
+
+
+def api_home(request, *args, **kwargs):
+    product = Product.objects.all().order_by("?").first()
+    data = {}
+
+    if product:
+        data["id"] = product.id
+        data["title"] = product.title
+        data["content"] = product.content
+        data["price"] = product.price
+    return JsonResponse(data)
+
+
+def api_home(request, *args, **kwargs):
+    product = Product.objects.all().order_by("?").first()
+
+    if product:
+        data = model_to_dict(
+            product,
+            fields=["title"],
+        )
+        data = json.dumps(data)
+    return HttpResponse(data, headers={"Content-Type": "application/json"})
+
+
+
+
+
+from rest_framework.decorators import api_view
+from products.models import Product
+from rest_framework.response import Response
+from .serializers import ProdcutSerializer
+from rest_framework import status
+
+
+# @api_view(["GET"])
+# def api_home(request):
+#     instance = Product.objects.all().order_by("?").first()
+#     if instance:
+#         data = ProdcutSerializer(instance).data
+#     return Response(data)
+
+
+@api_view(["POST"])
+def api_home(request):
+    # data = request.data
+    serializer = ProdcutSerializer(data=request.data)
+    if serializer.is_valid(raise_exception=True):
+        # instance= serializer.save()
+        # print(instance)
+        return Response(serializer.data)
+    return Response({"error": "something went wrong"}, stat)
