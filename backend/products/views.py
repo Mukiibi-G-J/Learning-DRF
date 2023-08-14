@@ -1,6 +1,6 @@
 from rest_framework import generics, mixins, permissions, authentication
 from rest_framework.response import Response
-from api.serializers import ProductSerializer
+from .serializers import ProductSerializer
 from rest_framework.decorators import api_view
 from django.shortcuts import get_object_or_404
 from .models import Product
@@ -27,6 +27,7 @@ class ProductListCreateAPIView(generics.ListCreateAPIView, StaffEditorPermission
     def perform_create(self, serializer):
         title = serializer.validated_data.get("title")
         content = serializer.validated_data.get("content") or None
+        email = serializer.validated_data.pop("email")
         if content is None:
             content = title
         print(serializer.validated_data)
