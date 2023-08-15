@@ -6,10 +6,12 @@ from django.shortcuts import get_object_or_404
 from .models import Product
 from api.authentication import TokenAuthentication
 from .permissions import IsStaffEditorPermission
-from api.mixins import StaffEditorPermissionMixin
+from api.mixins import StaffEditorPermissionMixin, UserQuerySetMixin
 
 
-class ProductListCreateAPIView(generics.ListCreateAPIView, StaffEditorPermissionMixin):
+class ProductListCreateAPIView(
+    UserQuerySetMixin, generics.ListCreateAPIView, StaffEditorPermissionMixin
+):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
@@ -31,11 +33,20 @@ class ProductListCreateAPIView(generics.ListCreateAPIView, StaffEditorPermission
         if content is None:
             content = title
         print(serializer.validated_data)
-        serializer.save(content=content)
+        serializer.save(content=content, user=self.request.user)
         # return serializer.save()
 
+    # def get_queryset(self, *args, **kwargs):
+    #     qs = super().get_queryset(*args, **kwargs)
+    #     request = self.request
+    #     user = self.request.user
+    #     if not user.is_authenticated:
+    #         return Product.objects.none()
+    #     print(request.user)
+    #     return qs.filter(user=request.user)
 
-class ProductDetaiAPIView(generics.RetrieveAPIView):
+
+class ProductDetaiAPIView(generics.RetrieveAPIView, UserQuerySetMixin):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
@@ -44,7 +55,7 @@ class ProductDetaiAPIView(generics.RetrieveAPIView):
     #     pass
 
 
-class ProductUpdateAPIView(generics.UpdateAPIView):
+class ProductUpdateAPIView(generics.UpdateAPIView, UserQuerySetMixin):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     lookup_field = "pk"
@@ -55,7 +66,7 @@ class ProductUpdateAPIView(generics.UpdateAPIView):
             instance.content = instance.title
 
 
-class ProductDestroyAPIView(generics.DestroyAPIView):
+class ProductDestroyAPIView(generics.DestroyAPIView, UserQuerySetMixin):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     lookup_field = "pk"
