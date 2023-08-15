@@ -14,12 +14,12 @@ class ProductInlineSerializer(serializers.Serializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    related_products = ProductInlineSerializer(
-        source="user.product_set.all", read_only=True,
-        many=True
-    )
+    # related_products = ProductInlineSerializer(
+    #     source="user.product_set.all", read_only=True,
+    #     many=True
+    # )
     owner = UserPublicSerailizer(source="user", read_only=True)
-    my_discount = serializers.SerializerMethodField(read_only=True)
+    # my_discount = serializers.SerializerMethodField(read_only=True)
 
     # my_user_data = serializers.SerializerMethodField(read_only=True)
     # url = serializers.SerializerMethodField(read_only=True)
@@ -41,7 +41,7 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = [
-            "related_products",
+            # "related_products",
             "owner",
             "email",
             "url",
@@ -50,7 +50,7 @@ class ProductSerializer(serializers.ModelSerializer):
             "price",
             "content",
             "sale_price",
-            "my_discount",
+            # "my_discount",
             # "my_user_data",
             "name",
         ]
@@ -64,15 +64,15 @@ class ProductSerializer(serializers.ModelSerializer):
     #         return None
     #     return reverse("product-detail", kwargs={"pk": obj.pk}, request=request)
 
-    def get_my_discount(self, obj):
-        if not hasattr(obj, "id"):
-            return None
-        if not isinstance(obj, Product):
-            return None
-        # try:
-        return obj.get_discount()
-        # except:
-        #     None
+    # def get_my_discount(self, obj):
+    #     if not hasattr(obj, "id"):
+    #         return None
+    #     if not isinstance(obj, Product):
+    #         return None
+    #     # try:
+    #     return obj.get_discount()
+    #     # except:
+    #     #     None
 
     # def get_my_user_data(self, obj):
     #     return {"username": obj.user.username}
