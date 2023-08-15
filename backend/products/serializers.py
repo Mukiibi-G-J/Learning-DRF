@@ -53,6 +53,7 @@ class ProductSerializer(serializers.ModelSerializer):
             # "my_discount",
             # "my_user_data",
             "name",
+            "public",
         ]
 
     # def get_url(self, obj):
