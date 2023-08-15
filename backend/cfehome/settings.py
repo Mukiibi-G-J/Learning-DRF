@@ -37,9 +37,13 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    #! third party api services
+    "algoliasearch_django",
+    #! Internal  apps
     "api",
     "products",
     "search",
+    #! third party packages
     "rest_framework",
     "rest_framework.authtoken",
 ]
@@ -147,4 +151,11 @@ REST_FRAMEWORK = {
     ],
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
     "PAGE_SIZE": 15,
+}
+
+
+ALGOLIA = {
+    "APPLICATION_ID": "NOLAFJAEU3",
+    "API_KEY": "d0657b801b8789c94e82445ae681cd55",
+    "INDEX_PREFIX":"jeff"
 }

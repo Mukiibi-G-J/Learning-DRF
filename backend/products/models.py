@@ -2,8 +2,11 @@ from django.db import models
 from django.conf import settings
 from django.db.models.query import QuerySet
 from django.db.models import Q
+import random
 
 User = settings.AUTH_USER_MODEL
+
+TAGS_MODEL_VALUES = ["electornics", "cars", "boats", "movies", "cameras"]
 
 
 class ProductQuerySet(models.QuerySet):
@@ -13,7 +16,7 @@ class ProductQuerySet(models.QuerySet):
     def search(self, query, user=None):
         lookup = Q(title__icontains=query) | Q(content__icontains=query)
         qs = self.is_public().filter(lookup)
-        
+
         if user is not None:
             qs2 = qs.filter(user=user).filter(lookup)
             qs = (qs | qs2).distinct()
@@ -35,6 +38,8 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=15, decimal_places=2, default=99.99)
     public = models.BooleanField(default=True)
 
+    # publish_timestamp = models.DateTimeField()
+
     objects = ProductManager()
 
     @property
@@ -43,3 +48,11 @@ class Product(models.Model):
 
     def get_discount(self):
         return float(self.price) - 0.2
+
+    def is_public(self) -> bool:
+        # if now > self.publish_timestamp
+
+        return self.public
+
+    def get_tags_list(self):
+        return [random.choice(TAGS_MODEL_VALUES)]
