@@ -63,9 +63,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "cfehome.urls"
-CORS_ALLOWED_ORIGIN_REGEXES = [
-    r"^api/.*",
-]
+# CORS_ALLOWED_ORIGIN_REGEXES = [
+#     r"^api/.*",
+# ]
 
 TEMPLATES = [
     {
