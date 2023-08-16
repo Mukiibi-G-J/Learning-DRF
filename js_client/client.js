@@ -152,50 +152,50 @@ function getProductList() {
 validateJWTToken();
 // getProductList()
 
-const searchClient = algoliasearch(
-  //   "4IHLYNCMBJ",
-  //   "2d98a3c1e68d4f81bbba206ca075cfbb"
-  "NOLAFJAEU3",
-  "bcf54f28597b56e5815117563a45678e"
-);
+// const searchClient = algoliasearch(
+//   //   "4IHLYNCMBJ",
+//   //   "2d98a3c1e68d4f81bbba206ca075cfbb"
+//   "NOLAFJAEU3",
+//   "bcf54f28597b56e5815117563a45678e"
+// );
 
-const search = instantsearch({
-  indexName: "jeff_Product",
-  searchClient,
-});
+// const search = instantsearch({
+//   indexName: "jeff_Product",
+//   searchClient,
+// });
 
-search.addWidgets([
-  instantsearch.widgets.searchBox({
-    container: "#searchbox",
-  }),
+// search.addWidgets([
+//   instantsearch.widgets.searchBox({
+//     container: "#searchbox",
+//   }),
 
-  instantsearch.widgets.clearRefinements({
-    container: "#clear-refinements",
-  }),
+//   instantsearch.widgets.clearRefinements({
+//     container: "#clear-refinements",
+//   }),
 
-  instantsearch.widgets.refinementList({
-    container: "#user-list",
-    attribute: "user",
-  }),
-  instantsearch.widgets.refinementList({
-    container: "#public-list",
-    attribute: "public",
-  }),
+//   instantsearch.widgets.refinementList({
+//     container: "#user-list",
+//     attribute: "user",
+//   }),
+//   instantsearch.widgets.refinementList({
+//     container: "#public-list",
+//     attribute: "public",
+//   }),
 
-  instantsearch.widgets.hits({
-    container: "#hits",
-    templates: {
-      item: `
-            <div>
-                <div>{{#helpers.highlight}}{ "attribute": "title" }{{/helpers.highlight}}</div>
-                <div>{{#helpers.highlight}}{ "attribute": "body" }{{/helpers.highlight}}</div>
+//   instantsearch.widgets.hits({
+//     container: "#hits",
+//     templates: {
+//       item: `
+//             <div>
+//                 <div>{{#helpers.highlight}}{ "attribute": "title" }{{/helpers.highlight}}</div>
+//                 <div>{{#helpers.highlight}}{ "attribute": "body" }{{/helpers.highlight}}</div>
                 
-                <p>{{ user }}</p><p>\${{ price }}
+//                 <p>{{ user }}</p><p>\${{ price }}
             
             
-            </div>`,
-    },
-  }),
-]);
+//             </div>`,
+//     },
+//   }),
+// ]);
 
-search.start();
+// search.start();
