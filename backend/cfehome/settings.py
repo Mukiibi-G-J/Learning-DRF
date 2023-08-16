@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+import datetime
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -44,13 +45,16 @@ INSTALLED_APPS = [
     "products",
     "search",
     #! third party packages
+    "corsheaders",
     "rest_framework",
     "rest_framework.authtoken",
+    "rest_framework_simplejwt",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -59,6 +63,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "cfehome.urls"
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^api/.*",
+]
 
 TEMPLATES = [
     {
@@ -144,6 +151,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.SessionAuthentication",
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
         "api.authentication.TokenAuthentication",
     ],
     "DEFAULT_PERMISSION_CLASSES": [
@@ -157,5 +165,19 @@ REST_FRAMEWORK = {
 ALGOLIA = {
     "APPLICATION_ID": "NOLAFJAEU3",
     "API_KEY": "d0657b801b8789c94e82445ae681cd55",
-    "INDEX_PREFIX":"jeff"
+    "INDEX_PREFIX": "jeff",
 }
+
+
+SIMPLE_JWT = {
+    "AUTH_HEADER_TYPES": ["Bearer"],
+    "ACCESS_TOKEN_LIFETIME": datetime.timedelta(seconds=30),  # minutes=5
+    "REFRESH_TOKEN_LIFETIME": datetime.timedelta(minutes=1),  # days=1
+}
+CORS_ALLOWED_ORIGINS = []
+
+if DEBUG:
+    CORS_ALLOWED_ORIGINS = [
+        "http://localhost:8111",
+        "http://127.0.0.1:8111",
+    ]
