@@ -6,6 +6,7 @@ def get_client():
 
 
 def get_index(index_name="jeff_Product"):
+    #cfe_Article
     client = get_client()
 
     index = client.init_index(index_name)

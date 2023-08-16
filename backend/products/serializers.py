@@ -37,6 +37,7 @@ class ProductSerializer(serializers.ModelSerializer):
     name = serializers.CharField(source="title", read_only=True)
     #! can also use foregin keys with the source
     # email = serializers.CharField(source="user.email")
+    body = serializers.CharField(source="content")
 
     class Meta:
         model = Product
@@ -48,12 +49,14 @@ class ProductSerializer(serializers.ModelSerializer):
             "pk",
             "title",
             "price",
-            "content",
+            # "content",
             "sale_price",
             # "my_discount",
             # "my_user_data",
             "name",
             "public",
+            "body",
+            "path"
         ]
 
     # def get_url(self, obj):

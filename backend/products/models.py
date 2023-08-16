@@ -56,3 +56,7 @@ class Product(models.Model):
 
     def get_tags_list(self):
         return [random.choice(TAGS_MODEL_VALUES)]
+
+    @property
+    def path(self):
+        return f"/api/proudct/{self.pk}/"
